@@ -7,7 +7,7 @@ export function TodoListItem({
   onRemove,
   toggleItem,
 }: {
-  item: ShoppingListItemData;
+  item: TodoListItemData;
   onRemove: (id: number) => void;
   toggleItem: (id: number) => void;
 }) {
