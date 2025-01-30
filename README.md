@@ -4,7 +4,7 @@
 
 You will be taking an existing todo app that runs as client components and update to use server components reading and writing to a database.
 
-1. Update the components to display the list of items from the db. Read the list of Todos from the datase.
+1. Update the components to display the list of items from the db. Read the list of Todos from the database.
 2. Update the components to add new items to database when the add button is clicked.
 3. Update the components to remove items from the database when the delete button is clicked.
 4. Update the components to update an items checkes status when the checkbox is clicked.
