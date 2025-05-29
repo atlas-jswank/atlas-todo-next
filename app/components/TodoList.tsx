@@ -1,3 +1,5 @@
+"use client";
+
 import { TodoListItemData } from "../types";
 import { TodoListItem } from "./TodoListItem";
 

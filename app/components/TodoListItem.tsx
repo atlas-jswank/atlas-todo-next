@@ -1,3 +1,5 @@
+"use client";
+
 import { TodoListItemData } from "../types";
 import { DeleteButton } from "./DeleteButton";
 import { Checkbox } from "./Checkbox";
@@ -25,7 +27,7 @@ export function TodoListItem({
             item.completed ? "line-through text-muted-foreground" : ""
           }`}
         >
-          {item.name}
+          {item.todoText}
         </label>
       </div>
       <DeleteButton id={item.id} onRemove={onRemove} />

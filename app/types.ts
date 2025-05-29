@@ -1,5 +1,5 @@
 export type TodoListItemData = {
   id: number;
-  name: string;
+  todoText: string;
   completed: boolean;
 };

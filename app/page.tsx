@@ -8,12 +8,12 @@ import { TodoListItemData } from "./types";
 const DEFAULT_DATA: TodoListItemData[] = [
   {
     id: 1,
-    name: "Apples",
+    todoText: "Buy Apples",
     completed: false,
   },
   {
     id: 2,
-    name: "Banana",
+    todoText: "Buy Bananas",
     completed: true,
   },
 ];
@@ -25,7 +25,7 @@ export default function TodoListApp() {
   function addItem(item: string) {
     // TODO: Replace with call to db to insert item
     const newItems = [...items];
-    newItems.push({ id: Date.now(), name: item, completed: false });
+    newItems.push({ id: Date.now(), todoText: item, completed: false });
     setItems(newItems);
   }
 
