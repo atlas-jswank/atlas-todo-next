@@ -1,47 +1,39 @@
-"use client";
-
-import { useState } from "react";
+import { db } from "@/db";
 import { AddItemForm } from "./components/AddItemForm";
 import { TodoList } from "./components/TodoList";
-import { TodoListItemData } from "./types";
+import { revalidatePath } from "next/cache";
 
-const DEFAULT_DATA: TodoListItemData[] = [
-  {
-    id: 1,
-    todoText: "Buy Apples",
-    completed: false,
-  },
-  {
-    id: 2,
-    todoText: "Buy Bananas",
-    completed: true,
-  },
-];
+export default async function TodoListApp() {
+  const items = await db.all("SELECT * FROM todos;");
 
-export default function TodoListApp() {
-  // TODO: reaplce with call to db to read items
-  const [items, setItems] = useState<TodoListItemData[]>(DEFAULT_DATA);
+  async function addItem(item: string) {
+    "use server";
+    await db.run(
+      "INSERT INTO todos (id, todoText, completed) VALUES (?, ?, ?)",
+      [new Date().getTime(), item, false]
+    );
 
-  function addItem(item: string) {
-    // TODO: Replace with call to db to insert item
-    const newItems = [...items];
-    newItems.push({ id: Date.now(), todoText: item, completed: false });
-    setItems(newItems);
+    revalidatePath("/");
   }
 
-  function removeItem(id: number) {
-    // TODO: Replace with call to db to remove item
-    const newItems = items.filter((item) => item.id !== id);
-    setItems(newItems);
+  async function removeItem(id: number) {
+    "use server";
+    await db.run("DELETE FROM todos WHERE id = ?", [id]);
+
+    revalidatePath("/");
   }
 
-  function toggleItem(id: number) {
-    // TODO: Replace with call to db to update item
-    const newItems = items.map((item) => {
-      if (item.id === id) item.completed = !item.completed;
-      return item;
-    });
-    setItems(newItems);
+  async function toggleItem(id: number) {
+    "use server";
+    const items = await db.all("SELECT * FROM todos;");
+    const item = items.find((item) => item.id === id);
+    if (!item) return;
+    await db.run("UPDATE todos SET completed = ? WHERE id = ?", [
+      !item.completed,
+      id,
+    ]);
+
+    revalidatePath("/");
   }
 
   return (
